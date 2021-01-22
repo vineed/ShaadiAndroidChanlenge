@@ -1,4 +1,4 @@
-package com.shaadi.shaadiandroidchallenge
+package com.shaadi.shaadiandroidchallenge.partner_match.viewmodel
 
 import androidx.lifecycle.ViewModel
 

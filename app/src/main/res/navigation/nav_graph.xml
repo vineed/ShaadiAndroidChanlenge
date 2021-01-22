@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/partnerMatcherFragment"
-        android:name="com.shaadi.shaadiandroidchallenge.PartnerMatcherFragment"
+        android:name="com.shaadi.shaadiandroidchallenge.partner_match.view.PartnerMatcherFragment"
         android:label="partner_matcher_fragment"
         tools:layout="@layout/partner_matcher_fragment" />
 </navigation>
