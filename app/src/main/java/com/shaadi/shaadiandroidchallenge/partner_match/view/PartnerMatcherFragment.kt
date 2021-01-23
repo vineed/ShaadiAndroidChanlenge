@@ -29,7 +29,6 @@ class PartnerMatcherFragment :
 
         binding?.let { mBinding ->
             mBinding.btnTest.setOnClickListener {
-                viewModel.test()
 
             }
         }
