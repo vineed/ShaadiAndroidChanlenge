@@ -1,7 +1,14 @@
 package com.shaadi.shaadiandroidchallenge.partner_match.viewmodel
 
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.shaadi.shaadiandroidchallenge.core.base.viewmodel.BaseViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-class PartnerMatcherViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+sealed class PartnerMatcherViewEvent {
+
+}
+
+class PartnerMatcherViewModel : BaseViewModel<PartnerMatcherViewEvent>() {
+
 }

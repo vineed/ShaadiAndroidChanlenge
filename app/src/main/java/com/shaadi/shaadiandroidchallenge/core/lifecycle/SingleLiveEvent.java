@@ -1,4 +1,4 @@
-package com.shaadi.shaadiandroidchallenge.core.base.lifecycle_ext;
+package com.shaadi.shaadiandroidchallenge.core.lifecycle;
 
 import androidx.annotation.MainThread;
 import androidx.annotation.Nullable;

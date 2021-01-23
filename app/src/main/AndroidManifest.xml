@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ShaadiAndroidChallenge"
         android:name=".ShaadiApp">
-        <activity android:name=".host.MainActivity">
+        <activity android:name=".host.view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
