@@ -4,7 +4,7 @@ sealed class Result<out T> {
 
     sealed class Network<T>(
         var msg: String = "Success",
-        val stCode: Int
+        /*val stCode: Int*/
     ) : Result<T>() {
         data class Success<T>(
             var successMsg: String = "Success",
