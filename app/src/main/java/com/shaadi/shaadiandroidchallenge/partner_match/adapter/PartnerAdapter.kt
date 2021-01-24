@@ -1,11 +1,18 @@
 package com.shaadi.shaadiandroidchallenge.partner_match.adapter
 
+import android.animation.AnimatorInflater
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.FrameLayout
+import androidx.core.animation.addListener
+import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.request.Disposable
@@ -61,21 +68,39 @@ class PartnerAdapter(
 
                 tvAccepted.setBackgroundResource(R.drawable.accepted_unselected)
                 tvDecline.setBackgroundResource(R.drawable.rejected_unselected)
+                tvAccepted.isEnabled = true
+                tvDecline.isEnabled = true
 
                 flAcceptStatus.isVisible = false
 
                 userMatch.isAccepted?.let { isAccepted ->
-                    flAcceptStatus.isVisible = true
+                    tvAccepted.isEnabled = false
+                    tvDecline.isEnabled = false
 
                     if (isAccepted) {
                         tvAcceptStatus.setText(R.string.message_member_accepted)
-                        flAcceptStatus.setBackgroundColor(ContextCompat.getColor(context, R.color.accept_green))
+                        flAcceptStatus.setBackgroundColor(
+                            ContextCompat.getColor(
+                                context,
+                                R.color.accept_green
+                            )
+                        )
                         tvAccepted.setBackgroundResource(R.drawable.accepted_selected)
                     } else {
                         tvAcceptStatus.setText(R.string.message_member_rejected)
-                        flAcceptStatus.setBackgroundColor(ContextCompat.getColor(context, R.color.reject_red))
+                        flAcceptStatus.setBackgroundColor(
+                            ContextCompat.getColor(
+                                context,
+                                R.color.reject_red
+                            )
+                        )
                         tvDecline.setBackgroundResource(R.drawable.rejected_selected)
                     }
+
+                    flAcceptStatus.isVisible = true
+
+                    if (userMatch.animateIsAccepted)
+                        animateAcceptedPanel(userMatch, flAcceptStatus)
                 }
 
                 tvAccepted.setOnClickListener {
@@ -86,6 +111,29 @@ class PartnerAdapter(
                     onActionListener(userMatch, false)
                 }
             }
+        }
+
+        private fun animateAcceptedPanel(userMatch: UserMatch, flAcceptStatus: FrameLayout) {
+
+            val slideUpAnimation = AnimationUtils.loadAnimation(context, R.anim.slide_up)
+                .apply {
+                    duration = 400
+                    interpolator = FastOutSlowInInterpolator()
+                }
+
+            flAcceptStatus.animation = slideUpAnimation
+
+            slideUpAnimation.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationStart(p0: Animation?) {}
+
+                override fun onAnimationEnd(p0: Animation?) {
+                    userMatch.animateIsAccepted = false
+                }
+
+                override fun onAnimationRepeat(p0: Animation?) {}
+            })
+
+            slideUpAnimation.start()
         }
 
         fun unBind() {

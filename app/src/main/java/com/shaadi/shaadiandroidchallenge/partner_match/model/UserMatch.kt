@@ -14,6 +14,7 @@ data class UserMatch(
     val mediumImage: String = "",
     val largeImage: String = "",
     var isAccepted: Boolean? = null,
+    var animateIsAccepted: Boolean = false
 ) {
     val displayName
         get() = "$firstName ${if (firstName.isNotBlank()) lastName[0].toUpperCase() else lastName}"
