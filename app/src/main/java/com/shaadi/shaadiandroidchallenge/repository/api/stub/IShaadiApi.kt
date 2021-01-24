@@ -7,7 +7,7 @@ import retrofit2.http.Query
 import java.io.IOException
 
 interface IShaadiApi {
-    @Throws(IOException::class)
+    @Throws(Exception::class)
     @GET(".")
     suspend fun getAllUserMatch(
         @Query("results") resultCount: String,
