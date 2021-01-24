@@ -73,7 +73,6 @@ class PartnerMatcherFragment :
 
     private fun setUpObservers() {
         viewModel.userMatchListLiveData.observe(viewLifecycleOwner) { userMatchList ->
-            //TODO diffutil
             partnerAdapter.setItems(userMatchList)
         }
 
