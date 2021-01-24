@@ -5,6 +5,7 @@ import com.shaadi.shaadiandroidchallenge.core.base.viewmodel.BaseViewModel
 import com.shaadi.shaadiandroidchallenge.repository.stub.IUserMatchRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -16,9 +17,20 @@ class PartnerMatcherViewModel(private val userMatchRepository: IUserMatchReposit
     BaseViewModel<PartnerMatcherViewEvent>() {
 
     fun retrieveAllMatchUsers() {
-        viewModelScope.launch(Dispatchers.IO) {
-            userMatchRepository.getAllMatchUsers().collect {
-                Timber.d("Got value $it")
+        viewModelScope.launch {
+            showLoader("Loading data...")
+            try {
+                /*
+                //TODO Experimental at this point, when done will remove try finally
+                .onCompletion {
+                    hideLoader()
+                }*/
+                userMatchRepository.getAllMatchUsers()
+                    .collect {
+                        Timber.d("Got value $it")
+                    }
+            } finally {
+                hideLoader()
             }
         }
     }

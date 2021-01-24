@@ -9,7 +9,7 @@ sealed class ApiOutput<out T> {
         data class Success<T>(
             var successMsg: String = "Success",
             val successSTCode: Int,
-            val body: T,
+            val body: T?,
         ) : Network<T>(successMsg, successSTCode)
 
         data class Failure(

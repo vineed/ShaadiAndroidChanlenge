@@ -19,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 val shaadiModule = module(override = true) {
     single { ShaadiEnvironment.shaadiEnvironment }
     single { ShaadiDatabase.getDatabase(get()) }
-    single<IUserMatchRepository> { UserMatchRepository() }
+    single<IUserMatchRepository> { UserMatchRepository(get()) }
     viewModel { PartnerMatcherViewModel(get()) }
     single<IShaadiApi> {
         val environment: IShaadiEnvironment = get()
