@@ -16,10 +16,10 @@ abstract class BaseViewModel<EV> : ViewModel() {
 
     var isNetworkOnlineAction: (() -> Boolean)? = null
 
-    protected val _viewEventLiveData = SingleLiveEvent<EV>()
+    private val _viewEventLiveData = SingleLiveEvent<EV>()
     val viewEventLiveData: LiveData<EV> = _viewEventLiveData
 
-    fun fireEvent(event: EV) {
+    protected fun fireEvent(event: EV) {
         _viewEventLiveData.postValue(event)
     }
 

@@ -10,11 +10,12 @@ import com.shaadi.shaadiandroidchallenge.R
 import com.shaadi.shaadiandroidchallenge.core.base.view.BaseFragment
 import com.shaadi.shaadiandroidchallenge.databinding.PartnerMatcherFragmentBinding
 import com.shaadi.shaadiandroidchallenge.partner_match.viewmodel.PartnerMatcherViewEvent
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PartnerMatcherFragment :
     BaseFragment<PartnerMatcherViewEvent, PartnerMatcherViewModel, PartnerMatcherFragmentBinding>(R.layout.partner_matcher_fragment) {
 
-    override val viewModel: PartnerMatcherViewModel by viewModels()
+    override val viewModel: PartnerMatcherViewModel by viewModel()
 
     override fun getBinding(rootView: View) = PartnerMatcherFragmentBinding.bind(rootView)
 
@@ -29,7 +30,7 @@ class PartnerMatcherFragment :
 
         binding?.let { mBinding ->
             mBinding.btnTest.setOnClickListener {
-
+                viewModel.retrieveAllMatchUsers()
             }
         }
     }
