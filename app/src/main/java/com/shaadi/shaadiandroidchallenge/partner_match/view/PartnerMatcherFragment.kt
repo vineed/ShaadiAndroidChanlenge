@@ -2,9 +2,12 @@ package com.shaadi.shaadiandroidchallenge.partner_match.view
 
 import android.os.Bundle
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewbinding.ViewBinding
 import com.shaadi.shaadiandroidchallenge.partner_match.viewmodel.PartnerMatcherViewModel
@@ -79,7 +82,35 @@ class PartnerMatcherFragment :
         }
 
         viewModel.isApiFetching.observe(viewLifecycleOwner) { isApiFetching ->
-            binding?.tvApiFetchLoader?.isVisible = isApiFetching
+            animateLoader(isApiFetching)
         }
+    }
+
+    private fun animateLoader(show: Boolean) {
+        binding?.tvApiFetchLoader?.isVisible = show
+
+        val slideDownAnimation = AnimationUtils.loadAnimation(
+            context,
+            if (show) R.anim.slide_down else R.anim.slide_up
+        )
+            .apply {
+                duration = 300
+                interpolator = FastOutSlowInInterpolator()
+            }
+
+        binding?.tvApiFetchLoader?.animation = slideDownAnimation
+
+        slideDownAnimation.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(p0: Animation?) {}
+
+            override fun onAnimationEnd(p0: Animation?) {
+                binding?.tvApiFetchLoader?.isVisible = show
+            }
+
+            override fun onAnimationRepeat(p0: Animation?) {}
+        })
+
+        slideDownAnimation.start()
+
     }
 }

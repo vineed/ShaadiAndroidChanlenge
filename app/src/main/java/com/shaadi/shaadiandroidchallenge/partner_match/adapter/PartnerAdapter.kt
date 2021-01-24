@@ -1,16 +1,12 @@
 package com.shaadi.shaadiandroidchallenge.partner_match.adapter
 
-import android.animation.AnimatorInflater
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.FrameLayout
 import android.widget.TextView
-import androidx.core.animation.addListener
-import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
@@ -116,7 +112,7 @@ class PartnerAdapter(
 
         private fun animateAcceptedPanel(userMatch: UserMatch, tvAcceptStatus: TextView) {
 
-            val slideUpAnimation = AnimationUtils.loadAnimation(context, R.anim.slide_up)
+            val slideUpAnimation = AnimationUtils.loadAnimation(context, R.anim.slide_fade_up)
                 .apply {
                     duration = 400
                     interpolator = FastOutSlowInInterpolator()
