@@ -4,11 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.shaadi.shaadiandroidchallenge.repository.db.entities.UserEntity
+import com.shaadi.shaadiandroidchallenge.repository.db.dao.impl.UserMatchDao
+import com.shaadi.shaadiandroidchallenge.repository.db.entities.UserMatchEntity
 import com.shaadi.shaadiandroidchallenge.repository.db.stub.IShaadiDatabase
 import com.shaadi.shaadiandroidchallenge.repository.db.stub.core.Constants
 
-@Database(entities = [UserEntity::class], version = Constants.DB_VERSION, exportSchema = true)
+@Database(entities = [UserMatchEntity::class], version = Constants.DB_VERSION, exportSchema = true)
 abstract class ShaadiDatabase : RoomDatabase(), IShaadiDatabase {
     companion object {
         private var shaadiDatabase: IShaadiDatabase? = null
@@ -27,4 +28,6 @@ abstract class ShaadiDatabase : RoomDatabase(), IShaadiDatabase {
             if (shaadiDatabase != null) shaadiDatabase = null
         }
     }
+
+    abstract override fun getUserMatchDao(): UserMatchDao
 }
