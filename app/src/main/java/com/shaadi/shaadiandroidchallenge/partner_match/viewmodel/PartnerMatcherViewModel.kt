@@ -65,8 +65,10 @@ class PartnerMatcherViewModel(private val userMatchRepository: IUserMatchReposit
                 userMatchRepository.updateUserAcceptedStatus(userMatch).collect { result ->
                     when (result) {
                         is Result.Success -> {
-                            _userMatchListLiveData.notifyLiveData { }
-                            showToast("Successfully saved")
+                            userMatch.isAccepted?.let { isAccepted ->
+                                _userMatchListLiveData.notifyLiveData { }
+                                showToast(if (isAccepted) "Member accepted!" else "Member recjected!")
+                            }
                         }
                         is Result.Failure -> showToast("Failed to update value")
                     }
