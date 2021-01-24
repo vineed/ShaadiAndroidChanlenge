@@ -37,7 +37,7 @@ class PartnerMatcherFragment :
     override fun onEvent(event: PartnerMatcherViewEvent) {
         when (event) {
             is PartnerMatcherViewEvent.MatchItemChange -> {
-                partnerAdapter.notifyItemChanged(event.pos)
+                partnerAdapter.notifyItemChanged(event.pos, event.userMatch)
             }
         }
     }

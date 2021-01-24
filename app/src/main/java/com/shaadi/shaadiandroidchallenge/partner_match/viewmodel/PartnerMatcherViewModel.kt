@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import java.io.IOException
 
 sealed class PartnerMatcherViewEvent {
-    class MatchItemChange(val pos: Int) : PartnerMatcherViewEvent()
+    class MatchItemChange(val pos: Int, val userMatch: UserMatch) : PartnerMatcherViewEvent()
 }
 
 class PartnerMatcherViewModel(private val userMatchRepository: IUserMatchRepository) :
@@ -71,7 +71,12 @@ class PartnerMatcherViewModel(private val userMatchRepository: IUserMatchReposit
                                 if (pos < 0) {
                                     wentWrong()
                                 } else {
-                                    fireEvent(PartnerMatcherViewEvent.MatchItemChange(pos))
+                                    fireEvent(
+                                        PartnerMatcherViewEvent.MatchItemChange(
+                                            pos,
+                                            userMatch
+                                        )
+                                    )
                                     showToast(if (isAccepted) "Member accepted!" else "Member recjected!")
                                 }
                             }
