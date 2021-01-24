@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.core.animation.addListener
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
@@ -71,7 +72,7 @@ class PartnerAdapter(
                 tvAccepted.isEnabled = true
                 tvDecline.isEnabled = true
 
-                flAcceptStatus.isVisible = false
+                tvAcceptStatus.isVisible = false
 
                 userMatch.isAccepted?.let { isAccepted ->
                     tvAccepted.isEnabled = false
@@ -79,7 +80,7 @@ class PartnerAdapter(
 
                     if (isAccepted) {
                         tvAcceptStatus.setText(R.string.message_member_accepted)
-                        flAcceptStatus.setBackgroundColor(
+                        tvAcceptStatus.setBackgroundColor(
                             ContextCompat.getColor(
                                 context,
                                 R.color.accept_green
@@ -88,7 +89,7 @@ class PartnerAdapter(
                         tvAccepted.setBackgroundResource(R.drawable.accepted_selected)
                     } else {
                         tvAcceptStatus.setText(R.string.message_member_rejected)
-                        flAcceptStatus.setBackgroundColor(
+                        tvAcceptStatus.setBackgroundColor(
                             ContextCompat.getColor(
                                 context,
                                 R.color.reject_red
@@ -97,10 +98,10 @@ class PartnerAdapter(
                         tvDecline.setBackgroundResource(R.drawable.rejected_selected)
                     }
 
-                    flAcceptStatus.isVisible = true
+                    tvAcceptStatus.isVisible = true
 
                     if (userMatch.animateIsAccepted)
-                        animateAcceptedPanel(userMatch, flAcceptStatus)
+                        animateAcceptedPanel(userMatch, tvAcceptStatus)
                 }
 
                 tvAccepted.setOnClickListener {
@@ -113,7 +114,7 @@ class PartnerAdapter(
             }
         }
 
-        private fun animateAcceptedPanel(userMatch: UserMatch, flAcceptStatus: FrameLayout) {
+        private fun animateAcceptedPanel(userMatch: UserMatch, tvAcceptStatus: TextView) {
 
             val slideUpAnimation = AnimationUtils.loadAnimation(context, R.anim.slide_up)
                 .apply {
@@ -121,7 +122,7 @@ class PartnerAdapter(
                     interpolator = FastOutSlowInInterpolator()
                 }
 
-            flAcceptStatus.animation = slideUpAnimation
+            tvAcceptStatus.animation = slideUpAnimation
 
             slideUpAnimation.setAnimationListener(object : Animation.AnimationListener {
                 override fun onAnimationStart(p0: Animation?) {}

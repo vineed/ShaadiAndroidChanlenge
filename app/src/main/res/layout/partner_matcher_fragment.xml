@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".partner_match.view.PartnerMatcherFragment">
 
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/srlUserMatch"
         android:layout_width="match_parent"
@@ -18,4 +19,17 @@
             tools:listitem="@layout/user_match_layout" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+    <TextView
+        android:id="@+id/tvApiFetchLoader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_dark"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Loading data..."
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:visibility="gone"
+        tools:visibility="visible"/>
 </FrameLayout>

@@ -28,6 +28,10 @@ class PartnerMatcherViewModel(private val userMatchRepository: IUserMatchReposit
             field = value
         }
 
+    private val _isApiFetching = MutableLiveData<Boolean>(false)
+    val isApiFetching: LiveData<Boolean>
+        get() = _isApiFetching
+
     init {
         retrieveAllMatchUsers()
     }
@@ -35,6 +39,8 @@ class PartnerMatcherViewModel(private val userMatchRepository: IUserMatchReposit
     fun retrieveAllMatchUsers() {
         viewModelScope.launch {
             showLoader("Loading data...")
+            _isApiFetching.value = true
+
             try {
 
                 userMatchRepository.getAllMatchUsers()
@@ -48,11 +54,19 @@ class PartnerMatcherViewModel(private val userMatchRepository: IUserMatchReposit
                             is Result.Success -> {
                                 hideLoader()
                                 _userMatchList = it.body
+
+                                if (it is Result.Success.APISource) {
+                                    _isApiFetching.value = false
+                                }
                             }
-                            is Result.Failure -> showToast(it.failureMsg)
+                            is Result.Failure -> {
+                                _isApiFetching.value = false
+                                showToast(it.failureMsg)
+                            }
                         }
                     }
             } catch (ex: IOException) {
+                _isApiFetching.value = false
                 networkWrong()
             } catch (ex: java.lang.Exception) {
                 wentWrong()
