@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -68,11 +69,11 @@ class PartnerAdapter(
 
                     if (isAccepted) {
                         tvAcceptStatus.setText(R.string.message_member_accepted)
-                        flAcceptStatus.setBackgroundColor(R.color.accept_green)
+                        flAcceptStatus.setBackgroundColor(ContextCompat.getColor(context, R.color.accept_green))
                         tvAccepted.setBackgroundResource(R.drawable.accepted_selected)
                     } else {
                         tvAcceptStatus.setText(R.string.message_member_rejected)
-                        flAcceptStatus.setBackgroundColor(R.color.reject_red)
+                        flAcceptStatus.setBackgroundColor(ContextCompat.getColor(context, R.color.reject_red))
                         tvDecline.setBackgroundResource(R.drawable.rejected_selected)
                     }
                 }

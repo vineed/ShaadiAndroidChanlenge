@@ -112,6 +112,7 @@
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center"
                 android:textSize="26sp"
+                android:textColor="@color/white"
                 tools:text="Member accepted" />
         </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
