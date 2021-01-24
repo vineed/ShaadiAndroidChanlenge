@@ -28,6 +28,10 @@ class PartnerMatcherViewModel(private val userMatchRepository: IUserMatchReposit
             field = value
         }
 
+    init {
+        retrieveAllMatchUsers()
+    }
+
     fun retrieveAllMatchUsers() {
         viewModelScope.launch {
             showLoader("Loading data...")
