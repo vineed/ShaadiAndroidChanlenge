@@ -23,18 +23,24 @@ class UserMatchRepository(
     override suspend fun getAllMatchUsers(): Flow<Result<List<UserMatch>>> =
         flow {
 
+            emit(
+                Result.Success.DBSource(
+                    body = userMatchDao.getAllMatchUser().map { it.asUserMatch() }
+                )
+            )
+
             flowApiCall { shaadiApi.getAllUserMatch("10", "1") }
                 .collect { userMatchDTO ->
                     val mappedMatchUserEntities =
                         userMatchDTO.results?.mapNotNull { it.asUserMatchEntity() }
 
                     userMatchDao.addAllMatchUser(mappedMatchUserEntities ?: emptyList())
-                }
 
-            emit(
-                Result.Network.Success(
-                    body = userMatchDao.getAllMatchUser().map { it.asUserMatch() })
-            )
+                    emit(
+                        Result.Success.APISource(
+                            body = userMatchDao.getAllMatchUser().map { it.asUserMatch() })
+                    )
+                }
         }
 
     override suspend fun updateUserAcceptedStatus(userMatch: UserMatch): Flow<Result<Nothing?>> =
@@ -42,8 +48,8 @@ class UserMatchRepository(
             val updateSt = userMatchDao.updateMatchUser(userMatch.asUserMatchEntity())
 
             emit(
-                if (updateSt > 0) Result.Network.Success<Nothing?>(body = null)
-                else Result.Network.Failure(failureBody = Constants.ERROR_OCCURRED)
+                if (updateSt > 0) Result.Success.DBSource<Nothing?>(body = null)
+                else Result.Failure(failureMsg = Constants.ERROR_OCCURRED)
             )
         }
 }

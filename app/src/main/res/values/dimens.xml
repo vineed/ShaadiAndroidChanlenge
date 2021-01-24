@@ -3,4 +3,7 @@
     <dimen name="progress_spinner_sz">75dp</dimen>
     <dimen name="progress_title">16sp</dimen>
     <dimen name="progress_title_marg_tp">2dp</dimen>
+    <dimen name="user_match_corner_rad">4dp</dimen>
+    <dimen name="user_short_desc_txt_sz">18sp</dimen>
+    <dimen name="user_name_txt_sz">24sp</dimen>
 </resources>

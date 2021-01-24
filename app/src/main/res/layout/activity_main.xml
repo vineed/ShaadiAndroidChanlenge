@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EEE"
     tools:context=".host.view.MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
@@ -21,5 +22,6 @@
 
     <include
         android:id="@+id/loader"
-        layout="@layout/loader_view" />
+        layout="@layout/loader_view"
+        android:visibility="invisible"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

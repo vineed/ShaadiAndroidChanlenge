@@ -20,8 +20,12 @@ interface UserMatchDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateMatchUser(matchEntity: UserMatchEntity): Int
 
+    @Query("DELETE FROM ${Constants.TABLE_USER}")
+    suspend fun deleteAllMatchUser()
+
     @Transaction
     suspend fun addAllMatchUser(matchEntityList: List<UserMatchEntity>) {
+        deleteAllMatchUser()
         for (matchEntity in matchEntityList) insertMatchUser(matchEntity)
     }
 }

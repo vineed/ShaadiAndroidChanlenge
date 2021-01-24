@@ -2,22 +2,16 @@ package com.shaadi.shaadiandroidchallenge.repository.model
 
 sealed class Result<out T> {
 
-    sealed class Network<T>(
-        var msg: String = "Success",
-        /*val stCode: Int*/
+    sealed class Success<T>(
+        var successMsg: String,
+        val body: T?,
     ) : Result<T>() {
-        data class Success<T>(
-            var successMsg: String = "Success",
-            //val successSTCode: Int,
-            val body: T?,
-        ) : Network<T>(successMsg/*, successSTCode*/)
-
-        data class Failure(
-            val failureBody: String,
-            var failureMsg: String = "Failure",
-            //var failureSTCode: Int
-        ) : Network<Nothing>(failureMsg/*, failureSTCode*/)
+        class DBSource<T>(msg: String = "Success", body: T?) : Success<T>(msg, body)
+        class APISource<T>(msg: String = "Success", body: T?) : Success<T>(msg, body)
     }
 
-    data class Error(val exception: Exception) : Result<Nothing>()
+    data class Failure(
+        var failureMsg: String = "Failure",
+        //var failureSTCode: Int
+    ) : Result<Nothing>()
 }

@@ -8,6 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="cyan">#6BCFDA</color>
     <color name="progress_overlay">#CD222222</color>
     <color name="progress_title">#BDBDBD</color>
+    <color name="user_name">@color/cyan</color>
 </resources>

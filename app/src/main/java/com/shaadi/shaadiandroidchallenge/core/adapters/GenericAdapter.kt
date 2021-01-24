@@ -34,23 +34,18 @@ open class GenericAdapter<T>(
     var viewModel: BaseViewModel? = null
     var view: Any? = null
 
-    */
-/*init {
-        *//*
-*/
-/*if (liveListItems != null) {
+init {
+
+if (liveListItems != null) {
             val liveItems = liveListItems.value
 
             if (liveItems != null) {
                 listItems = liveItems
             }
-        }*//*
-*/
-/*
+        }
 
-        *//*
-*/
-/*if (context is LifecycleOwner) {
+
+if (context is LifecycleOwner) {
             liveListItems?.observe(context, Observer {
                 if (listItems == it)
                     notifyDataSetChanged()
@@ -58,10 +53,8 @@ open class GenericAdapter<T>(
                     setItems(it)
                 }
             })
-        }*//*
-*/
-/*
-    }*//*
+        }
+    }
 
 
     fun setItems(listItems: MutableList<T>) {
@@ -159,4 +152,5 @@ interface OnMultiItemClickListener<T> {
     var ids: IntArray
 
     fun onItemClicked(position: Int, which: Int, data: T)
-}*/
+}
+*/

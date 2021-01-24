@@ -14,7 +14,11 @@ fun UserMatchEntity.asUserMatch() = UserMatch(
     street = this.street,
     city = this.city,
     state = this.state,
-    country = this.country
+    country = this.country,
+    thumbnail = this.thumbnail,
+    mediumImage = this.mediumImage,
+    largeImage = this.largeImage,
+    isAccepted = this.isAccepted
 )
 
 //api->db
@@ -28,7 +32,10 @@ fun ResultDTO.asUserMatchEntity(): UserMatchEntity? {
         street = this.location?.street?.name ?: "",
         city = this.location?.city ?: "",
         state = this.location?.state ?: "",
-        country = this.location?.country ?: ""
+        country = this.location?.country ?: "",
+        thumbnail = this.picture?.thumbnail ?: "",
+        mediumImage = this.picture?.medium ?: "",
+        largeImage = this.picture?.large ?: "",
     )
 }
 
@@ -42,5 +49,9 @@ fun UserMatch.asUserMatchEntity() = UserMatchEntity(
     street = this.street,
     city = this.city,
     state = this.state,
-    country = this.country
+    country = this.country,
+    thumbnail = this.thumbnail,
+    mediumImage = this.mediumImage,
+    largeImage = this.largeImage,
+    isAccepted = this.isAccepted
 )

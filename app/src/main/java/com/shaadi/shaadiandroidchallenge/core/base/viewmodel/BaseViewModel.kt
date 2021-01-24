@@ -47,4 +47,8 @@ abstract class BaseViewModel<EV> : ViewModel() {
         showToast(Constants.ERROR.ERROR_OCCURRED)
     }
 
+    fun networkWrong() {
+        showToast(Constants.ERROR.CHECK_NETWORK)
+    }
+
 }
