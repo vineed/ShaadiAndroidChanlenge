@@ -2,4 +2,6 @@
     <string name="app_name">AndroidChallenge</string>
     <string name="decline">Decline</string>
     <string name="accept">Accept</string>
+    <string name="message_member_accepted">Member accepted</string>
+    <string name="message_member_rejected">Member rejected</string>
 </resources>

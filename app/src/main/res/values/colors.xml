@@ -12,4 +12,7 @@
     <color name="progress_overlay">#CD222222</color>
     <color name="progress_title">#BDBDBD</color>
     <color name="user_name">@color/cyan</color>
+
+    <color name="accept_green">#89BD53</color>
+    <color name="reject_red">#C55E5E</color>
 </resources>

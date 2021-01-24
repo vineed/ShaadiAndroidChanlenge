@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.request.Disposable
@@ -60,10 +61,18 @@ class PartnerAdapter(
                 tvAccepted.setBackgroundResource(R.drawable.accepted_unselected)
                 tvDecline.setBackgroundResource(R.drawable.rejected_unselected)
 
+                flAcceptStatus.isVisible = false
+
                 userMatch.isAccepted?.let { isAccepted ->
+                    flAcceptStatus.isVisible = true
+
                     if (isAccepted) {
+                        tvAcceptStatus.setText(R.string.message_member_accepted)
+                        flAcceptStatus.setBackgroundColor(R.color.accept_green)
                         tvAccepted.setBackgroundResource(R.drawable.accepted_selected)
                     } else {
+                        tvAcceptStatus.setText(R.string.message_member_rejected)
+                        flAcceptStatus.setBackgroundColor(R.color.reject_red)
                         tvDecline.setBackgroundResource(R.drawable.rejected_selected)
                     }
                 }

@@ -23,7 +23,6 @@ sealed class PartnerMatcherViewEvent {
 class PartnerMatcherViewModel(private val userMatchRepository: IUserMatchRepository) :
     BaseViewModel<PartnerMatcherViewEvent>() {
 
-    //private val _userMatchList = mutableListOf<UserMatch>()
     private val _userMatchListLiveData = MutableLiveData<List<UserMatch>>(mutableListOf())
     val userMatchListLiveData: LiveData<List<UserMatch>>
         get() = _userMatchListLiveData
