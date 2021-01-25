@@ -10,21 +10,29 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.request.Disposable
 import com.shaadi.shaadiandroidchallenge.R
 import com.shaadi.shaadiandroidchallenge.databinding.UserMatchLayoutBinding
 import com.shaadi.shaadiandroidchallenge.partner_match.model.UserMatch
+import com.shaadi.shaadiandroidchallenge.utils.GenericDiffUtil
+import timber.log.Timber
 
 class PartnerAdapter(
     private val context: Context,
-    private var userMatchList: List<UserMatch> = mutableListOf(),
+    private var userMatchList: MutableList<UserMatch> = mutableListOf(),
     val onActionListener: (userMatch: UserMatch, isAccepted: Boolean) -> Unit
 ) :
     RecyclerView.Adapter<PartnerAdapter.PartnerViewHolder>() {
 
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
+    private val areItemTheSameAction by lazy {
+        { oldUserMatchItem: UserMatch, newUserMatch: UserMatch ->
+            oldUserMatchItem.uuid == newUserMatch.uuid
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PartnerViewHolder {
         return PartnerViewHolder(layoutInflater.inflate(R.layout.user_match_layout, parent, false))
@@ -34,14 +42,34 @@ class PartnerAdapter(
         holder.bindData(userMatchList[position])
     }
 
+    override fun onBindViewHolder(
+        holder: PartnerViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        super.onBindViewHolder(holder, position, payloads)
+    }
+
     override fun onViewRecycled(holder: PartnerViewHolder) {
         super.onViewRecycled(holder)
         holder.unBind()
     }
 
-    fun setItems(userMatchList: List<UserMatch>) {
-        this.userMatchList = userMatchList
-        notifyDataSetChanged()
+    fun setItems(updatedUserMatchList: List<UserMatch>) {
+        val userMatchDiffUtil =
+            DiffUtil.calculateDiff(
+                GenericDiffUtil(
+                    this.userMatchList,
+                    updatedUserMatchList,
+                    areItemTheSameAction
+                )
+            )
+        userMatchDiffUtil.dispatchUpdatesTo(this)
+
+        this.userMatchList.apply {
+            clear()
+            addAll(updatedUserMatchList)
+        }
     }
 
     override fun getItemCount(): Int = userMatchList.size
