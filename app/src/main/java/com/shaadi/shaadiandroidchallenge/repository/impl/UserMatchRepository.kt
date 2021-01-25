@@ -4,7 +4,7 @@ import com.shaadi.shaadiandroidchallenge.partner_match.ext.asUserMatch
 import com.shaadi.shaadiandroidchallenge.partner_match.ext.asUserMatchEntity
 import com.shaadi.shaadiandroidchallenge.partner_match.model.UserMatch
 import com.shaadi.shaadiandroidchallenge.repository.api.stub.IShaadiApi
-import com.shaadi.shaadiandroidchallenge.repository.db.dao.impl.UserMatchDao
+import com.shaadi.shaadiandroidchallenge.repository.db.dao.UserMatchDao
 import com.shaadi.shaadiandroidchallenge.repository.db.stub.IShaadiDatabase
 import com.shaadi.shaadiandroidchallenge.repository.impl.core.Constants
 import com.shaadi.shaadiandroidchallenge.repository.model.Result

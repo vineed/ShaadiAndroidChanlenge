@@ -1,4 +1,4 @@
-package com.shaadi.shaadiandroidchallenge.repository.db.dao.impl
+package com.shaadi.shaadiandroidchallenge.repository.db.dao
 
 import androidx.room.*
 import com.shaadi.shaadiandroidchallenge.repository.db.entities.UserMatchEntity
