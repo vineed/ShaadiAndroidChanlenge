@@ -1,12 +1,11 @@
 package com.shaadi.shaadiandroidchallenge.di
 
 import com.shaadi.shaadiandroidchallenge.BuildConfig
-import com.shaadi.shaadiandroidchallenge.env.impl.IShaadiEnvironment
-import com.shaadi.shaadiandroidchallenge.env.stub.ShaadiEnvironment
+import com.shaadi.shaadiandroidchallenge.env.stub.IShaadiEnvironment
+import com.shaadi.shaadiandroidchallenge.env.impl.ShaadiEnvironment
 import com.shaadi.shaadiandroidchallenge.partner_match.viewmodel.PartnerMatcherViewModel
 import com.shaadi.shaadiandroidchallenge.repository.api.stub.IShaadiApi
 import com.shaadi.shaadiandroidchallenge.repository.db.impl.ShaadiDatabase
-import com.shaadi.shaadiandroidchallenge.repository.db.stub.IShaadiDatabase
 import com.shaadi.shaadiandroidchallenge.repository.impl.UserMatchRepository
 import com.shaadi.shaadiandroidchallenge.repository.stub.IUserMatchRepository
 import okhttp3.OkHttpClient
