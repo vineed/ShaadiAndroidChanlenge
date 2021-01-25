@@ -56,10 +56,6 @@ class PartnerMatcherFragment :
         setUpObservers()
     }
 
-    private fun init() {
-        viewModel.retrieveAllMatchUsers()
-    }
-
     private fun setUpBindings() {
         binding?.let { mBinding ->
             mBinding.rvUserMatch.layoutManager = LinearLayoutManager(requireContext())
