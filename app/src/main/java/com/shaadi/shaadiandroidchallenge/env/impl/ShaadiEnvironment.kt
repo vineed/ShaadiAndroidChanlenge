@@ -1,7 +1,7 @@
-package com.shaadi.shaadiandroidchallenge.env.stub
+package com.shaadi.shaadiandroidchallenge.env.impl
 
-import com.shaadi.shaadiandroidchallenge.env.impl.IShaadiEnvironment
 import com.shaadi.shaadiandroidchallenge.BuildConfig
+import com.shaadi.shaadiandroidchallenge.env.stub.IShaadiEnvironment
 import java.util.*
 
 sealed class ShaadiEnvironment(override val BASE_URL: String = BuildConfig.BASE_URL) :
