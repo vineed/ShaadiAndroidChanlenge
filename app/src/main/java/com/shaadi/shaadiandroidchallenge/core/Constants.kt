@@ -9,8 +9,9 @@ interface Constants {
     }
 
     interface ERROR {
-        companion object{
-            const val CHECK_NETWORK = "Network error occured, please check whether you are connetion to internet."
+        companion object {
+            const val CHECK_NETWORK =
+                "Network error, please check whether you have internet connection."
             const val ERROR_OCCURRED = "Some error occurred."
         }
     }
