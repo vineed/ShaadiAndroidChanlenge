@@ -95,7 +95,7 @@ class PartnerMatcherViewModel(private val userMatchRepository: IUserMatchReposit
                                             userMatch
                                         )
                                     )
-                                    showToast(if (isAccepted) "Member accepted!" else "Member rejected!")
+                                    //showToast(if (isAccepted) "Member accepted!" else "Member rejected!")
                                 }
                             }
                         }
