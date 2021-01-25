@@ -1,13 +1,14 @@
 package com.shaadi.shaadiandroidchallenge.utils
 
+import android.os.Bundle
 import androidx.recyclerview.widget.DiffUtil
-import timber.log.Timber
 
 class GenericDiffUtil<T>(
     private val oldList: List<T>,
     private val newList: List<T>,
     private val areItemTheSameAction: (oldItem: T, newItem: T) -> Boolean,
     private val areContentsTheSameAction: ((oldItem: T, newItem: T) -> Boolean)? = null,
+    private val payloadAction: ((oldItem: T, newItem: T) -> Bundle)? = null
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize() = oldList.size
@@ -22,23 +23,18 @@ class GenericDiffUtil<T>(
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        val mAreContentsTheSameAction = areContentsTheSameAction
-
-        return if (mAreContentsTheSameAction != null) {
-            mAreContentsTheSameAction(
-                oldList[oldItemPosition],
-                newList[newItemPosition]
-            )
-        } else {
-            oldList[oldItemPosition] == newList[newItemPosition]
-        }
+        return areContentsTheSameAction
+            ?.let {
+                it(
+                    oldList[oldItemPosition],
+                    newList[newItemPosition]
+                )
+            } ?: oldList[oldItemPosition] == newList[newItemPosition]
     }
 
-    override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? {
-        val oldItem = oldList[oldItemPosition]
-        val newItem = newList[newItemPosition]
-
-
-        return super.getChangePayload(oldItemPosition, newItemPosition)
-    }
+    override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int) =
+        payloadAction
+            ?.let {
+                it(oldList[oldItemPosition], newList[newItemPosition])
+            } ?: super.getChangePayload(oldItemPosition, newItemPosition)
 }
