@@ -33,5 +33,5 @@ data class UserMatch(
 }
 
 fun String.appendCommaNotBlank(): String {
-    return if (this.isNotBlank()) "$this, " else ""
+    return this.trim().let { if (it.isNotBlank()) "$this, " else it }
 }

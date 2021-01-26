@@ -4,13 +4,17 @@ import com.shaadi.shaadiandroidchallenge.partner_match.model.UserMatch
 import org.junit.Test
 
 import org.junit.Assert.*
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
 import java.util.*
+import org.hamcrest.CoreMatchers.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
+@RunWith(JUnit4::class)
 class UserMatcherTest {
     @Test
     fun `does return correct displayName given firstName and lastName`() {
@@ -20,7 +24,7 @@ class UserMatcherTest {
             "", "", "", "", "", "", null
         )
 
-        assertEquals("Vijay S", userMatch.displayName)
+        assertThat(userMatch.displayName, `is`(equalTo("Vijay S")))
     }
 
     @Test
@@ -31,7 +35,7 @@ class UserMatcherTest {
             "", "", "", "", "", "", null
         )
 
-        assertEquals("Vijay S", userMatch.displayName)
+        assertThat(userMatch.displayName, `is`(equalTo("Vijay S")))
     }
 
     @Test
@@ -42,7 +46,7 @@ class UserMatcherTest {
             "", "", "", "", "", "", null
         )
 
-        assertEquals("Singh", userMatch.displayName)
+        assertThat(userMatch.displayName, `is`(equalTo("Singh")))
     }
 
     @Test
@@ -53,7 +57,7 @@ class UserMatcherTest {
             "MyCity", "MyState", "MyCountry", "", "", "", null
         )
 
-        assertEquals("27, MyStreet, MyCity, MyState, MyCountry", userMatch.shortDesc)
+        assertThat(userMatch.shortDesc, `is`(equalTo("27, MyStreet, MyCity, MyState, MyCountry")))
     }
 
     @Test
@@ -64,7 +68,7 @@ class UserMatcherTest {
             "", "MyState", "MyCountry", "", "", "", null
         )
 
-        assertEquals("27, MyState, MyCountry", userMatch.shortDesc)
+        assertThat(userMatch.shortDesc, `is`(equalTo("27, MyState, MyCountry")))
     }
 
     @Test
@@ -75,6 +79,6 @@ class UserMatcherTest {
             "", "MyState", "MyCountry", "", "", "", null
         )
 
-        assertEquals("MyState, MyCountry", userMatch.shortDesc)
+        assertThat(userMatch.shortDesc, `is`(equalTo("MyState, MyCountry")))
     }
 }
