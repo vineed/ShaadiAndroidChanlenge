@@ -29,7 +29,7 @@ data class UserMatch(
             age.let {
                 if (it < 0) "" else it
             }.toString().appendCommaNotBlank()
-        }${city.appendCommaNotBlank()}${state.appendCommaNotBlank()}${country}"
+        }${street.appendCommaNotBlank()}${city.appendCommaNotBlank()}${state.appendCommaNotBlank()}${country}"
 }
 
 fun String.appendCommaNotBlank(): String {
