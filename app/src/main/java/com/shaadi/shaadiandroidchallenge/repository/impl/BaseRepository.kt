@@ -31,21 +31,11 @@ abstract class BaseRepository {
             }
         }*/
 
-    protected inline fun <reified T> flowApiCall(crossinline apiCall: suspend () -> Response<T>) =
+    protected inline fun <reified T> flowApiCall(crossinline apiCall: suspend () -> T?) =
         flow {
-            //try {
-            val response = apiCall()
-
-            if (response.isSuccessful) {
-                val responseBody = response.body()
-
-                if (responseBody is T) {
-                    emit(responseBody)
-                }
-            } else
-                throw IOException("Invalid")
-            /*} catch (ioEx: IOException){
-                thr
-            }*/
+            emit(apiCall())
         }
+    /*} catch (ioEx: IOException){
+        thr
+    }*/
 }

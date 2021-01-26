@@ -9,6 +9,10 @@ import com.shaadi.shaadiandroidchallenge.core.models.ProgressModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import com.shaadi.shaadiandroidchallenge.core.lifecycle.SingleLiveEvent;
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import retrofit2.HttpException
+import java.io.IOException
 
 abstract class BaseViewModel<EV> : ViewModel() {
     var doLoading = MutableLiveData<ProgressModel>().apply { this.value = ProgressModel() }
@@ -51,4 +55,17 @@ abstract class BaseViewModel<EV> : ViewModel() {
         showToast(Constants.ERROR.CHECK_NETWORK)
     }
 
+
+    fun <T> Flow<T>.defaultNetworkCatch(action: (suspend (cause: Throwable) -> Unit)? = null): Flow<T> {
+        return catch { cause ->
+            when (cause) {
+                is HttpException ->
+                    showToast(cause.message ?: Constants.ERROR.ERROR_OCCURRED)
+                is IOException -> networkWrong()
+                is Exception -> wentWrong()
+            }
+
+            action?.invoke(cause)
+        }
+    }
 }

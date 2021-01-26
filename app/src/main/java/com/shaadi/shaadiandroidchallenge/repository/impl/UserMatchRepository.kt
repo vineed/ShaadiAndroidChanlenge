@@ -20,19 +20,21 @@ class UserMatchRepository(
 
     private val userMatchDao: UserMatchDao by lazy { shaadiDatabase.getUserMatchDao() }
 
-    override suspend fun getAllMatchUsers(): Flow<Result<List<UserMatch>>> =
+    override suspend fun getAllMatchUsers(doLoadCache: Boolean): Flow<Result<List<UserMatch>>> =
         flow {
 
-            emit(
-                Result.Success.DBSource(
-                    body = userMatchDao.getAllMatchUser().map { it.asUserMatch() }
+            if (doLoadCache) {
+                emit(
+                    Result.Success.DBSource(
+                        body = userMatchDao.getAllMatchUser().map { it.asUserMatch() }
+                    )
                 )
-            )
+            }
 
             flowApiCall { shaadiApi.getAllUserMatch("10", "1") }
                 .collect { userMatchDTO ->
                     val mappedMatchUserEntities =
-                        userMatchDTO.results?.mapNotNull { it.asUserMatchEntity() }
+                        userMatchDTO?.results?.mapNotNull { it.asUserMatchEntity() }
 
                     userMatchDao.addAllMatchUser(mappedMatchUserEntities ?: emptyList())
 
@@ -48,7 +50,7 @@ class UserMatchRepository(
             val updateSt = userMatchDao.updateMatchUser(userMatch.asUserMatchEntity())
 
             emit(
-                if (updateSt > 0) Result.Success.DBSource<Nothing?>(body = null)
+                if (updateSt > 0) Result.Success()
                 else Result.Failure(failureMsg = Constants.ERROR_OCCURRED)
             )
         }

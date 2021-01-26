@@ -12,5 +12,5 @@ interface IShaadiApi {
     suspend fun getAllUserMatch(
         @Query("results") resultCount: String,
         @Query("page") pageNo: String
-    ): Response<UserMatchDTO>
+    ): UserMatchDTO
 }

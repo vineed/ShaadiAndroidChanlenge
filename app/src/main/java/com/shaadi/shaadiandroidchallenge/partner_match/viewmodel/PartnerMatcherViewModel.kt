@@ -8,8 +8,8 @@ import com.shaadi.shaadiandroidchallenge.partner_match.model.UserMatch
 import com.shaadi.shaadiandroidchallenge.repository.model.Result
 import com.shaadi.shaadiandroidchallenge.repository.stub.IUserMatchRepository
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
-import java.io.IOException
 
 sealed class PartnerMatcherViewEvent {
     class MatchItemChange(val pos: Int, val userMatch: UserMatch) : PartnerMatcherViewEvent()
@@ -33,57 +33,48 @@ class PartnerMatcherViewModel(private val userMatchRepository: IUserMatchReposit
         get() = _isApiFetching
 
     init {
-        retrieveAllMatchUsers()
+        retrieveAllMatchUsers(true)
     }
 
-    fun retrieveAllMatchUsers() {
+    fun retrieveAllMatchUsers(loadCache: Boolean = true) {
         viewModelScope.launch {
-            showLoader("Loading data...")
-            _isApiFetching.value = true
+            userMatchRepository.getAllMatchUsers(loadCache)
+                .onStart {
+                    if (loadCache) showLoader("Please wait...")
+                    _isApiFetching.value = true
+                }
+                .defaultNetworkCatch {
+                    hideLoader()
+                    _isApiFetching.value = false
+                }
+                .collect {
+                    if (loadCache) hideLoader()
 
-            try {
+                    when (it) {
+                        is Result.Success -> {
+                            _userMatchList = it.body
 
-                userMatchRepository.getAllMatchUsers()
-                    /*//TODO Experimental at this point
-                    .onCompletion { cause ->
-                        hideLoader()
-
-                    }*/
-                    .collect {
-                        when (it) {
-                            is Result.Success -> {
-                                hideLoader()
-                                _userMatchList = it.body
-
-                                if (it is Result.Success.APISource) {
-                                    _isApiFetching.value = false
-                                }
-                            }
-                            is Result.Failure -> {
-                                _isApiFetching.value = false
-                                showToast(it.failureMsg)
-                            }
+                            if (it is Result.Success.APISource) _isApiFetching.value = false
+                        }
+                        is Result.Failure -> {
+                            showToast(it.failureMsg)
                         }
                     }
-            } catch (ex: IOException) {
-                _isApiFetching.value = false
-                networkWrong()
-            } catch (ex: java.lang.Exception) {
-                wentWrong()
-            } finally {
-                hideLoader()
-            }
+                }
         }
     }
 
     fun updateUserAcceptStatus(userMatch: UserMatch) {
         viewModelScope.launch {
-            showLoader("Please wait...")
-            try {
-                userMatchRepository.updateUserAcceptedStatus(userMatch).collect { result ->
+            userMatchRepository.updateUserAcceptedStatus(userMatch)
+                .defaultNetworkCatch { hideLoader() }
+                .onStart { showLoader("Please wait...") }
+                .collect { result ->
+                    hideLoader()
+
                     when (result) {
                         is Result.Success -> {
-                            userMatch.isAccepted?.let { isAccepted ->
+                            userMatch.isAccepted?.let {
                                 val pos = _userMatchList?.indexOf(userMatch) ?: -1
 
                                 if (pos < 0) {
@@ -99,14 +90,9 @@ class PartnerMatcherViewModel(private val userMatchRepository: IUserMatchReposit
                                 }
                             }
                         }
-                        is Result.Failure -> showToast("Failed to update value")
+                        is Result.Failure -> showToast(result.failureMsg)
                     }
                 }
-            } catch (ex: Exception) {
-                wentWrong()
-            } finally {
-                hideLoader()
-            }
         }
     }
 }

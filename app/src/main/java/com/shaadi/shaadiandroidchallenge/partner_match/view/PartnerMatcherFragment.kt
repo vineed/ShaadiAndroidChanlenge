@@ -67,7 +67,7 @@ class PartnerMatcherFragment :
         binding?.let { mBinding ->
             mBinding.srlUserMatch.setOnRefreshListener {
                 mBinding.srlUserMatch.isRefreshing = false
-                viewModel.retrieveAllMatchUsers()
+                viewModel.retrieveAllMatchUsers(false)
             }
         }
     }
