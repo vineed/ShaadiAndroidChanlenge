@@ -66,4 +66,15 @@ class UserMatcherTest {
 
         assertEquals("27, MyState, MyCountry", userMatch.shortDesc)
     }
+
+    @Test
+    fun `does return correct shortDesc given state and country`() {
+        val uuid = UUID.randomUUID().toString()
+        val userMatch = UserMatch(
+            uuid, "MR", "Vijay", "Singh", -1, "",
+            "", "MyState", "MyCountry", "", "", "", null
+        )
+
+        assertEquals("MyState, MyCountry", userMatch.shortDesc)
+    }
 }
