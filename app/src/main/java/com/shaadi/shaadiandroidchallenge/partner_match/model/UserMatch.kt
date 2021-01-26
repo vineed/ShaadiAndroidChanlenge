@@ -17,7 +17,12 @@ data class UserMatch(
     var animateIsAccepted: Boolean = false
 ) {
     val displayName
-        get() = "$firstName ${if (firstName.isNotBlank()) lastName[0].toUpperCase() else lastName}"
+        get() = firstName.trim().let { trimmedFirstName ->
+            "$trimmedFirstName${
+                if (trimmedFirstName.isNotBlank()) lastName[0].toUpperCase()
+                    .let { " $it" } else lastName
+            }"
+        }
 
     val shortDesc
         get() = "${
